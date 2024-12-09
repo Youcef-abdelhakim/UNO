@@ -1,4 +1,6 @@
-public class App {
+package mainPackage;
+
+public class UNO {
     public static void main(String[] args) throws Exception {
         System.out.println("Hello, World!");
     }
