@@ -1,6 +1,5 @@
 package mainPackage;
 
-import javax.swing.plaf.basic.BasicScrollPaneUI.VSBChangeListener;
 
 public class Card {
 
@@ -25,11 +24,13 @@ public class Card {
         }
     }
 
+    // *********Atributes of Card **************************
 
-    private final Color color;
+
+    private final  Color color;
     private final Value value;
 
-    public Card(final Color color, final Value value) {
+    public Card(Color color, Value value) {
         this.color = color;
         this.value = value;
     }
@@ -46,3 +47,5 @@ public class Card {
         return color + " " + value;
     }
 }
+
+
