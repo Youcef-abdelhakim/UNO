@@ -1,4 +1,4 @@
-package mainPackage;
+package defaultPackage;
 
 
 public class Card {

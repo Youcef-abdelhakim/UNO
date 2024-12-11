@@ -1,4 +1,4 @@
-package mainPackage;
+package defaultPackage;
 
 public class UNO {
     public static void main(String[] args) throws Exception {
