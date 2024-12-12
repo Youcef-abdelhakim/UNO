@@ -25,8 +25,16 @@ public class Player {
 		hand.add(card);
 	}
 
+	public void removeFromHand(int index) {
+		hand.remove(index);
+	}
+
 	public String GetName() {
 		return name;
+	}
+
+	public List<Card> getHand() {
+		return hand;
 	}
 
 	// *******************
