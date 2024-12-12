@@ -16,7 +16,7 @@ public class HumanPlayer extends Player {
         choosenCard = getHand().get(index);
         removeFromHand(index);
         return choosenCard;
-        // It should be a check of number or colore in the main game !
-
+        
+        // it shoud be a check if the card is valid with the game's stack or no !
     }
 }

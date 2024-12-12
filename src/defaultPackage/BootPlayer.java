@@ -2,6 +2,7 @@ package defaultPackage;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class BootPlayer extends Player{
 
@@ -17,19 +18,22 @@ public class BootPlayer extends Player{
 
         for(int i = 0; i < hand.size(); i++ ) {
             Card card = hand.get(i);
-            if(card.getColor() == curentCard.getColor() || 
-              card.getValue == curentCard.getValue() ||
-              card.getValue == Card.Value.Wild ||
-              card.getValue == Card.Value.Wild_Four ) {
+            if( card.getColor() == curentCard.getColor() || 
+                card.getValue() == curentCard.getValue() ||
+                card.getValue() == Card.Value.Wild ||
+                card.getValue() == Card.Value.Wild_Four ) {
+                
+                rightCards.add(card);
                 
                 rightCardsCounter ++;
 
             }
         }
-        
+        Random random = new Random();
 
+        int choosenCardIndex = random.nextInt(rightCardsCounter);
+        choosenCard = rightCards.get(choosenCardIndex);
 
-
-        return
+        return choosenCard;
     }
 }
