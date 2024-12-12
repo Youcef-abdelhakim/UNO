@@ -17,6 +17,10 @@ public class Player {
     //     this.hand = new ArrayList<>();
 	// }
 
+
+		
+
+
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -27,6 +31,10 @@ public class Player {
 
 	public void removeFromHand(int index) {
 		hand.remove(index);
+	}
+
+	public void drawCard(Card newCard) {
+		hand.add(newCard);
 	}
 
 	public String GetName() {
