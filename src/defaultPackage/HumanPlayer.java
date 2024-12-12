@@ -3,11 +3,7 @@ import java.util.Scanner;
 
 public class HumanPlayer extends Player {
     
-    @Override
-    public void setName(String name) {
-        
-        super.setName(name);
-    }
+
 
     public Card putCard(int index) {
         Scanner scan = new Scanner(System.in);
