@@ -12,11 +12,10 @@ public class Player {
 	// *******************************
 	// it's preferable if we use sters;
 
-	// public Player(String name) {
-	// 	this.name = name;
-    //     this.hand = new ArrayList<>();
-	// }
-
+	/*public Player(String name) {
+	 	this.name = name;
+        this.hand = new ArrayList<>();
+	}*/
 
 		
 
@@ -24,17 +23,15 @@ public class Player {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	public void AddCard(Card card) {
-		hand.add(card);
+	//Parameters type change = to support draw more then one card
+	public void AddCard(List<Card> cards) {
+		for (Card Card : cards) {
+			hand.add(Card);
+		}
 	}
 
 	public void removeFromHand(int index) {
 		hand.remove(index);
-	}
-
-	public void drawCard(Card newCard) {
-		hand.add(newCard);
 	}
 
 	public String GetName() {
@@ -44,7 +41,10 @@ public class Player {
 	public List<Card> getHand() {
 		return hand;
 	}
-
+	public String toString() {
+		return name;
+	}
+	
 	// *******************
 	// this function sshould be in the human player class;
 	
