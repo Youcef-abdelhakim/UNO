@@ -3,7 +3,6 @@ import java.util.Scanner;
 
 public class HumanPlayer extends Player {
     
-    
 
     public Card putCard(int index) {
         Scanner scan = new Scanner(System.in);
