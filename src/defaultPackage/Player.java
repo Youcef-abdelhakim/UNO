@@ -3,7 +3,6 @@ package defaultPackage;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class Player {
 
 	private String name;
@@ -21,11 +20,9 @@ public class Player {
 	public void setName(String name) {
 		this.name = name;
 	}
-	//Parameters type change = to support draw more then one card
-	public void AddCard(List<Card> cards) {
-		for (Card Card : cards) {
-			hand.add(Card);
-		}
+	// remove multiple draw
+	public void AddCard(Card Card) {
+		hand.add(Card);
 	}
 
 	public void removeFromHand(int index) {

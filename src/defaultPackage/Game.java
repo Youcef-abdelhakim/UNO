@@ -3,16 +3,55 @@ package defaultPackage;
 import java.util.List;
 import java.util.Scanner;
 import java.util.ArrayList;
-public class Game {
-	//first we have to know how many players there are
+import java.util.Collections;
 
+public class Game {
+
+	//first we have to know how many players there are
 
 	private List<Player> Competetors;
 	private int numberOfCompetetors;
-	
+	private Deck GameDeck;
+	private Player winner;
+	private Card lastCard;
 
-	//then constructing the players by the input giving us their names 
-	public Game(Deck deck) {
+	//setters and getters
+	public List<Player> getCompetetors() {
+		return this.Competetors;
+	  }
+	public void setCompetetors(List<Player> value) {
+		this.Competetors = value;
+	  }
+  
+	public int getNumberOfCompetetors() {
+		return this.numberOfCompetetors;
+	  }
+	public void setNumberOfCompetetors(int value) {
+		this.numberOfCompetetors = value;
+	  }
+  
+	public Deck getGameDeck() {
+		return this.GameDeck;
+	  }
+	public void setGameDeck(Deck value) {
+		this.GameDeck = value;
+	  }
+  
+	public Player getWinner() {
+		return this.winner;
+	  }
+	public void setWinner(Player value) {
+		this.winner = value;
+	  }
+	
+	public Card getLastCard() {
+		return this.lastCard;
+	  }
+	public void setLastCard(Card value) {
+		this.lastCard = value;
+	  }
+	  //then constructing the players by the input giving us their names 
+	public Game() {
 		//Ayoub
 		int number,numberHumans;
 		Competetors = new ArrayList<>();
@@ -55,26 +94,31 @@ public class Game {
 		}
 
 		//create the deck "not yet"
+		GameDeck = new Deck();
 
+		//distributions of cards
+		//give every one of them a card seven times 
 
-
-
+		for (Player player : Competetors) {
+			for (int i = 0; i < 7; i++) {
+				player.AddCard(GameDeck.PopCard());
+			}
+		}
+		
+		//shuffle the players to determine how is going to start
+		Collections.shuffle(Competetors);
+		//initialazing the play
+		lastCard = GameDeck.PopCard();
 	}
-	public List<Player> getList(){
-		return Competetors;
-	}
-
+	public void Round(Card lastCard){
 	
-	//give every one of them a card seven times 
-	//the game start with the first player who put his names + to add the times of people that are playing 
-	//inside a while with condition "no winner" keep the game playing with the for loop of how many players
-	//the players should be in a list so it would be easy to remove players from it "if we continue for the second winner"
-	//
+
+
+
+	}
+	
 	public static void main(String[] args) {
-		//for test
-		Deck deck = new Deck();
-		Game game = new Game(deck);
-		System.out.println(game.getList());
+
 	}
 
 }
