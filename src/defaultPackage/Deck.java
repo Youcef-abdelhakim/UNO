@@ -1,10 +1,9 @@
 package defaultPackage;
-import java.util.Random;
-import java.util.List;
-import java.util.ArrayList;
-
 import defaultPackage.Card.Color;
 import defaultPackage.Card.Value;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 
 public class Deck {
@@ -57,6 +56,7 @@ public class Deck {
     public Card GetCard(int i) {
     	return cards.get(i);
     }
+    
     int numofCards(){
         return cards.size();
     }

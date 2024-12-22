@@ -1,9 +1,9 @@
 package defaultPackage;
 
-import java.util.List;
-import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
+import java.util.Scanner;
 
 public class Game {
 
@@ -111,9 +111,12 @@ public class Game {
 		lastCard = GameDeck.PopCard();
 	}
 	public void Round(Card lastCard){
-	
-
-
+		while(winner == null){
+			for(Player player : Competetors){
+				System.out.print(player.GetName()+ "'s turn");`		
+				
+			}
+		}
 
 	}
 	

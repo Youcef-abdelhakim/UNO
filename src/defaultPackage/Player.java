@@ -36,9 +36,6 @@ public class Player {
 	public List<Card> getHand() {
 		return hand;
 	}
-	public String toString() {
-		return name;
-	}
 	
 	// *******************
 	// this function sshould be in the human player class;
