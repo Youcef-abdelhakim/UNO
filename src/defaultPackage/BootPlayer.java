@@ -47,11 +47,12 @@ public class BootPlayer extends Player{
         Random random = new Random();
         int choosenCardIndex = random.nextInt(rightCards.size());
         choosenCard = rightCards.get(choosenCardIndex);
-        
 
         return choosenCard;
         // if boot dont have a valid card that is mean that the function will return null and that s mean that 
         // we should have a check if it is null the boot add card to his hand pass;
         
     }
+
+    
 }

@@ -21,15 +21,15 @@ public class Player {
 		this.name = name;
 	}
 	// remove multiple draw
-	public void AddCard(Card Card) {
+	public void addCard(Card Card) {
 		hand.add(Card);
 	}
 
-	public void removeFromHand(int index) {
-		hand.remove(index);
+	public Card removeFromHand(int index) {
+		return hand.remove(index);
 	}
 
-	public String GetName() {
+	public String getName() {
 		return name;
 	}
 

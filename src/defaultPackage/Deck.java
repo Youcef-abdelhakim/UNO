@@ -61,7 +61,7 @@ public class Deck {
         return cards.size();
     }
 
-    Card PopCard(){
+    Card popCard(){
         Card removedCard = cards.remove((cards.size())-1);
         return removedCard;
     }

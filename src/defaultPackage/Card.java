@@ -46,6 +46,10 @@ public class Card {
     public String toString() {
         return color + " " + value;
     }
+
+    public boolean isDrawFour() {
+        return this.value == Value.Wild_Four;
+    }
 }
 
 

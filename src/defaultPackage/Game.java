@@ -1,127 +1,174 @@
 package defaultPackage;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Game {
 
-	//first we have to know how many players there are
+    private List<Player> competitors;
+    private int numberOfCompetitors;
+    private Deck gameDeck;
+    private Player winner;
+    private Card lastCard;
+    private int drawCardsCount = 0; // track the number of cards to be drawn
 
-	private List<Player> Competetors;
-	private int numberOfCompetetors;
-	private Deck GameDeck;
-	private Player winner;
-	private Card lastCard;
+    // constructor
+    public Game() {
+        competitors = new ArrayList<>();
+        setupGame();
+    }
 
-	//setters and getters
-	public List<Player> getCompetetors() {
-		return this.Competetors;
-	  }
-	public void setCompetetors(List<Player> value) {
-		this.Competetors = value;
-	  }
-  
-	public int getNumberOfCompetetors() {
-		return this.numberOfCompetetors;
-	  }
-	public void setNumberOfCompetetors(int value) {
-		this.numberOfCompetetors = value;
-	  }
-  
-	public Deck getGameDeck() {
-		return this.GameDeck;
-	  }
-	public void setGameDeck(Deck value) {
-		this.GameDeck = value;
-	  }
-  
-	public Player getWinner() {
-		return this.winner;
-	  }
-	public void setWinner(Player value) {
-		this.winner = value;
-	  }
-	
-	public Card getLastCard() {
-		return this.lastCard;
-	  }
-	public void setLastCard(Card value) {
-		this.lastCard = value;
-	  }
-	  //then constructing the players by the input giving us their names 
-	public Game() {
-		//Ayoub
-		int number,numberHumans;
-		Competetors = new ArrayList<>();
-		//Enter the total number of players
+    public void setupGame() {
+        Scanner scanner = new Scanner(System.in);
 
-		Scanner scan = new Scanner(System.in);
-		do {
-			System.out.println("Enter the number of the total competetors");
-			number = scan.nextInt();
-			scan.nextLine();
-		} while (number<2 || number>4);
-		this.numberOfCompetetors=number;
+        // input number of players
+        do {
+            System.out.println("Enter the total number of competitors (2-4): ");
+            numberOfCompetitors = scanner.nextInt();
+            scanner.nextLine();
+        } while (numberOfCompetitors < 2 || numberOfCompetitors > 4);
 
-		//know how many human will play
+        // input number of human players
+        int numberHumans;
+        do {
+            System.out.println("Enter the number of human competitors (1-" + numberOfCompetitors + "): ");
+            numberHumans = scanner.nextInt();
+            scanner.nextLine();
+        } while (numberHumans < 1 || numberHumans > numberOfCompetitors);
 
-		do {
-			System.out.println("Enter the number of the human competetors(any diffefence between total and human number will be considered as bots)");
-			numberHumans = scan.nextInt();
-			scan.nextLine();
-		} while (numberHumans<1 || numberHumans>number);
+        // add human players
+        for (int i = 0; i < numberHumans; i++) {
+            System.out.println("Enter the name of player " + (i + 1) + ": ");
+            String name = scanner.nextLine();
+            Player human = new Player();
+            human.setName(name);
+            competitors.add(human);
+        }
 
-		//inserting the human players
+        // add bot players if needed
+        for (int i = 0; i < numberOfCompetitors - numberHumans; i++) {
+            String[] botNames = {"Bot_Mike", "Bot_Jake", "Bot_Leo", "Bot_Alex"};
+            Player bot = new BootPlayer();
+            bot.setName(botNames[i]);
+            competitors.add(bot);
+        }
 
-		for (int index = 0; index < numberHumans; index++) {
-			System.out.println("Enter the name of player n'"+(index+1));
-			String name = scan.nextLine();
-			Player human = new Player();
-			human.setName(name);
-			Competetors.add(human);
-		}
-		scan.close();
+        // initialize the deck and shuffle
+        gameDeck = new Deck();
 
-		//inseting the bots
+        // Distribute cards
+        for (Player player : competitors) {
+            for (int i = 0; i < 7; i++) {
+                player.addCard(gameDeck.popCard());
+            }
+        }
 
-		for (int index = 0; index < numberOfCompetetors-numberHumans; index++) {
-			String[] botNames = {"Mike","Jake","Leo"};
-			BootPlayer bot = new BootPlayer();
-			bot.setName(botNames[index]+"_Bot");
-			Competetors.add(bot);
-		}
+        // set the starting card
+        do {
+            lastCard = gameDeck.popCard();
+        } while (lastCard.getColor() == Card.Color.Wild); // ensure first card is not a wild card
 
-		//create the deck "not yet"
-		GameDeck = new Deck();
+        // shuffle player order
+        Collections.shuffle(competitors);
 
-		//distributions of cards
-		//give every one of them a card seven times 
+        System.out.println("Game setup complete. Starting the game!");
+    }
 
-		for (Player player : Competetors) {
-			for (int i = 0; i < 7; i++) {
-				player.AddCard(GameDeck.PopCard());
-			}
-		}
-		
-		//shuffle the players to determine how is going to start
-		Collections.shuffle(Competetors);
-		//initialazing the play
-		lastCard = GameDeck.PopCard();
-	}
-	public void Round(Card lastCard){
-		while(winner == null){
-			for(Player player : Competetors){
-				System.out.print(player.GetName()+ "'s turn");`		
-				
-			}
-		}
+    public void playGame() {
+        while (winner == null) {
+            for (Player player : competitors) {
+                System.out.println("\n" + player.getName() + "'s turn.");
+                System.out.println("Last card on the pile: " + lastCard);
+                System.out.println("Your hand: " + player.getHand());
 
-	}
-	
-	public static void main(String[] args) {
-		
-	}
+                // handle the effect of drawing cards, if applicable
+                if (drawCardsCount > 0) {
+                    for (int i = 0; i < drawCardsCount; i++) {
+                        player.addCard(gameDeck.popCard());
+                    }
+                    System.out.println(player.getName() + " drew " + drawCardsCount + " cards.");
+                    drawCardsCount = 0;
+                    continue; // skip this player's turn
+                }
 
+                if (player instanceof BootPlayer) {
+                    botPlay((BootPlayer) player);
+                } else {
+                    humanPlay(player);
+                }
+
+                // check if the player has won
+                if (player.getHand().isEmpty()) {
+                    winner = player;
+                    System.out.println("\ud83c\udf89 " + player.getName() + " wins the game! \ud83c\udf89");
+                    return;
+                }
+            }
+        }
+    }
+
+    private void humanPlay(Player player) {
+        Scanner scanner = new Scanner(System.in);
+        List<Card> hand = player.getHand();
+
+        while (true) {
+            System.out.println("Enter the card index to play (0-" + (hand.size() - 1) + "), or -1 to draw: ");
+            int choice = scanner.nextInt();
+
+            if (choice == -1) {
+                player.addCard(gameDeck.popCard());
+                System.out.println("You drew a card.");
+                break;
+            } else if (choice >= 0 && choice < hand.size()) {
+                Card selectedCard = hand.get(choice);
+                if (isValidCard(selectedCard)) {
+                    lastCard = player.removeFromHand(choice);
+                    System.out.println("You played: " + selectedCard);
+
+                    // handle wild card effects
+                    if (selectedCard.getColor() == Card.Color.Wild && selectedCard.isDrawFour()) {
+                        drawCardsCount = 4;
+                        System.out.println("Next player must draw 4 cards!");
+                    }
+
+                    break;
+                } else {
+                    System.out.println("Invalid card! Choose a card that matches the color or value.");
+                }
+            } else {
+                System.out.println("Invalid choice. Try again.");
+            }
+        }
+    }
+
+    private void botPlay(BootPlayer bot) {
+        List<Card> hand = bot.getHand();
+        for (int i = 0; i < hand.size(); i++) {
+            if (isValidCard(hand.get(i))) {
+                lastCard = bot.removeFromHand(i);
+                System.out.println(bot.getName() + " played: " + lastCard);
+
+                // handle wild card effects
+                if (lastCard.getColor() == Card.Color.Wild && lastCard.isDrawFour()) {
+                    drawCardsCount = 4;
+                    System.out.println("Next player must draw 4 cards!");
+                }
+
+                return;
+            }
+        }
+
+        // if no valid card, draw
+        bot.addCard(gameDeck.popCard());
+        System.out.println(bot.getName() + " drew a card.");
+    }
+
+    private boolean isValidCard(Card card) {
+        return card.getColor() == lastCard.getColor() || card.getValue() == lastCard.getValue() ||
+               card.getColor() == Card.Color.Wild;
+    }
+
+    public static void main(String[] args) {
+        Game game = new Game();
+        game.playGame();
+    }
 }
