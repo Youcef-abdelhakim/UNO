@@ -56,12 +56,24 @@ public class Deck {
     public Card GetCard(int i) {
     	return cards.get(i);
     }
+
+    public List<Card> getCards() {
+
+        return cards;
+
+    }
     
     int numofCards(){
         return cards.size();
     }
 
-    Card PopCard(){
+    public void addCard(Card card) {
+
+        cards.add(card);
+
+    }
+
+    Card popCard(){
         Card removedCard = cards.remove((cards.size())-1);
         return removedCard;
     }
