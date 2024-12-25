@@ -1,33 +1,29 @@
 package defaultPackage;
 
-
 public class Card {
 
     enum Color {
-        Red, Blue, Green, Yellow, Wild;
+        Red, Blue, Green, Yellow;
 
         private static Color[] colors = Color.values();
 
         public static Color getColors(int i) {
             return Color.colors[i];
         }
-    }    
-
+    }
 
     enum Value {
-        Zero, One, Two, Three, Four, Five, Six, Seven, Eight, Nine, DrawTwo, Skip, Reverse, Wild, Wild_Four;
+        Zero, One, Two, Three, Four, Five, Six, Seven, Eight, Nine, DrawTwo, Skip, Reverse;
 
-        public static Value[] values = Value.values();
+        private static Value[] values = Value.values();
 
         public static Value getValue(int i) {
             return Value.values[i];
         }
     }
 
-    // *********Atributes of Card **************************
-
-
-    private final  Color color;
+    // Attributes of Card
+    private final Color color;
     private final Value value;
 
     public Card(Color color, Value value) {
@@ -47,9 +43,7 @@ public class Card {
         return color + " " + value;
     }
 
-    public boolean isDrawFour() {
-        return this.value == Value.Wild_Four;
+    public boolean isDrawTwo() {
+        return this.value == Value.DrawTwo;
     }
 }
-
-

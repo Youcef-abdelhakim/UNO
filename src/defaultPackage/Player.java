@@ -3,59 +3,34 @@ package defaultPackage;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Player {
+public abstract class Player {
+    private String name;
+    private List<Card> hand = new ArrayList<>();
 
-	private String name;
-	private List<Card> hand = new ArrayList<>();
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	// *******************************
-	// it's preferable if we use sters;
+    public String getName() {
+        return name;
+    }
 
-	/*public Player(String name) {
-	 	this.name = name;
-        this.hand = new ArrayList<>();
-	}*/
+    public List<Card> getHand() {
+        return hand;
+    }
 
+    public void addCard(Card card) {
+        hand.add(card);
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
-	// remove multiple draw
-	public void addCard(Card Card) {
-		hand.add(Card);
-	}
+    public Card removeFromHand(int index) {
+        return hand.remove(index);
+    }
 
-	public Card removeFromHand(int index) {
-		return hand.remove(index);
-	}
+    public abstract Card putCard(Card lastCard, Deck gameDeck);
 
-	public String getName() {
-		return name;
-	}
-
-	public List<Card> getHand() {
-		return hand;
-	}
-	
-	// *******************
-	// this function sshould be in the human player class;
-	
-	// public Card putCard(int index) {
-		
-	// 	Scanner scan = new Scanner(System.in);
-		
-	// 	while(index <= 0 || index > hand.size()) {
-	// 		System.out.println("enter a valid card position");
-	// 		index = scan.nextInt();
-	// 	}
-
-	// 	scan.close();
-	
-    //     return hand.remove(index);
-    // }
-	
-	// public void GetHand() {
-	// 	System.out.println(hand);
-	// }
-	
+    protected boolean isValidCard(Card card, Card lastCard) {
+        return card.getColor() == lastCard.getColor() || 
+               card.getValue() == lastCard.getValue();
+    }
 }
