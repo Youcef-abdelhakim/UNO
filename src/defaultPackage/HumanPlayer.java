@@ -8,7 +8,6 @@ public class HumanPlayer extends Player {
     public Card putCard(Card lastCard, Deck gameDeck) {
         Scanner scanner = new Scanner(System.in);
         Card selectedCard = null;
-
         while (true) {
             System.out.println("Last card on the pile: " + lastCard);
             System.out.println("Your hand: " + getHand());
@@ -33,6 +32,7 @@ public class HumanPlayer extends Player {
                 System.out.println("Invalid choice. Try again.");
             }
         }
+        scanner.close();
         return selectedCard;
     }
 }
