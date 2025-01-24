@@ -51,6 +51,7 @@ public class Game {
         } while (lastCard.getValue() == Card.Value.DrawTwo);
 
         Collections.shuffle(competitors);
+        System.out.println(competitors);
         System.out.println("Game setup complete. Starting the game!");
     }
 
@@ -74,7 +75,7 @@ public class Game {
                                 int choicee;
                                 if (choice == '0') {
                                     while (true) {
-                                        System.out.println("Enter the index of the chosen card (0," + (currentPlayer.counter(Value.DrawTwo).size() - 1) + "):\n");
+                                        System.out.println("Enter the index of the chosen card (0," + (currentPlayer.counter(Value.DrawTwo).size() - 1) + "):");
                                         choicee = s.nextInt();
                                         s.nextLine();
                                         if (choicee >= 0 && choicee < currentPlayer.counter(Value.DrawTwo).size()) {
@@ -90,21 +91,23 @@ public class Game {
                                         currentPlayer.addCard(gameDeck.popCard());
                                     }
                                     plusTwo = false;
-                                    System.out.println(currentPlayer.getName() + " drew 2 cards.");
+                                    System.out.println(currentPlayer.getName() + " drew"+Acc+" cards.");
                                 }
                                 s.close();
                             } else {
                                 for (int index = 0; index < Acc; index++) {
                                     currentPlayer.addCard(gameDeck.popCard());
                                 }
+                                Acc = 0;
                                 plusTwo = false;
                                 System.out.println(currentPlayer.getName() + " drew "+Acc+" cards.");
                             }
                         } else if (currentPlayer instanceof BootPlayer) {
-                            System.out.println(currentPlayer.getName() + " has drawn " + Acc + " cards.");
+                            System.out.println(currentPlayer.getName() + " has drew " + Acc + " cards.");
                             for (int index = 0; index < Acc; index++) {
                                 currentPlayer.addCard(gameDeck.popCard());
                             }
+                            Acc = 0;
                             plusTwo = false;
                         }
                     } else {
@@ -139,6 +142,8 @@ public class Game {
         while (competitors.get(competitors.size() - 1).getName() != reverser.getName()) {
             competitors.add(0, competitors.remove(competitors.size() - 1));
         }
+        Collections.reverse(competitors);
+        competitors.add(0, competitors.remove(competitors.size() - 1));
     }
 
     public static void main(String[] args) {
