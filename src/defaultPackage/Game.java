@@ -62,51 +62,60 @@ public class Game {
             for (int i = 0; i < competitors.size(); i++) {
                 Player currentPlayer = competitors.get(i);
                 System.out.println("\n" + currentPlayer.getName() + "'s turn.");
-                if(!skipped){
-                    if(plusTwo){
-                        Acc +=2;
-                        if (currentPlayer.counter(Value.DrawTwo) != null) {
-                            System.out.println("Would you put your counter or draw two cards :\n[0] : choose from "+currentPlayer.counter(Value.DrawTwo)+"\n[other]:Draw two");
-                            Scanner s = new Scanner(System.in);
-                            char choice = s.nextLine().charAt(0);
-                            int choicee;
-                            if (choice == '0'){
-                                while(true){
-                                    System.out.println("Enter the index of the choosen card(0,"+(currentPlayer.counter(Value.DrawTwo).size()-1)+") :");
-                                    choicee = s.nextInt();
-                                    s.nextLine();
-                                    if(choice>0 && choice<currentPlayer.counter(Value.DrawTwo).size()){
-                                        break;
-                                    }else{
-                                        System.out.println("Invalid index");
+
+                if (!skipped) {
+                    if (plusTwo) {
+                        Acc += 2;
+                        if (currentPlayer instanceof HumanPlayer) {
+                            if (currentPlayer.counter(Value.DrawTwo).size() != 0) {
+                                System.out.println("Would you put your counter or draw two cards:\n[0]: choose from " + currentPlayer.counter(Value.DrawTwo) + "\n[other]: Draw two");
+                                Scanner s = new Scanner(System.in);
+                                char choice = s.nextLine().charAt(0);
+                                int choicee;
+                                if (choice == '0') {
+                                    while (true) {
+                                        System.out.println("Enter the index of the chosen card (0," + (currentPlayer.counter(Value.DrawTwo).size() - 1) + "):\n");
+                                        choicee = s.nextInt();
+                                        s.nextLine();
+                                        if (choicee >= 0 && choicee < currentPlayer.counter(Value.DrawTwo).size()) {
+                                            break;
+                                        } else {
+                                            System.out.println("Invalid index");
+                                        }
                                     }
+                                    lastCard = currentPlayer.counter(Value.DrawTwo).get(choicee);
+                                    currentPlayer.removeFromHand(lastCard);
+                                } else {
+                                    for (int index = 0; index < Acc; index++) {
+                                        currentPlayer.addCard(gameDeck.popCard());
+                                    }
+                                    plusTwo = false;
+                                    System.out.println(currentPlayer.getName() + " drew 2 cards.");
                                 }
-                                lastCard = currentPlayer.counter(Value.DrawTwo).get(choicee);
-                                currentPlayer.removeFromHand(lastCard);
-                            }else{
+                                s.close();
+                            } else {
                                 for (int index = 0; index < Acc; index++) {
                                     currentPlayer.addCard(gameDeck.popCard());
                                 }
                                 plusTwo = false;
-                                System.out.println(currentPlayer.getName() + " drew 2 cards.");
+                                System.out.println(currentPlayer.getName() + " drew "+Acc+" cards.");
                             }
-                            s.close();
-                        }else{
+                        } else if (currentPlayer instanceof BootPlayer) {
+                            System.out.println(currentPlayer.getName() + " has drawn " + Acc + " cards.");
                             for (int index = 0; index < Acc; index++) {
                                 currentPlayer.addCard(gameDeck.popCard());
                             }
                             plusTwo = false;
-                            System.out.println(currentPlayer.getName() + " drew 2 cards.");
                         }
-                    }else{
+                    } else {
                         Card playedCard = currentPlayer.putCard(lastCard, gameDeck);
                         if (playedCard != null) {
                             lastCard = playedCard;
                             if (playedCard.getValue() == Card.Value.DrawTwo) {
                                 plusTwo = true;
-                            }else if(playedCard.getValue() == Card.Value.Skip){
+                            } else if (playedCard.getValue() == Card.Value.Skip) {
                                 skipped = true;
-                            }else if(playedCard.getValue() == Card.Value.Reverse){
+                            } else if (playedCard.getValue() == Card.Value.Reverse) {
                                 reverseOrder(i);
                                 break;
                             }
@@ -116,22 +125,22 @@ public class Game {
                                 return;
                             }
                         }
-                    } 
-                }else{
+                    }
+                } else {
                     System.out.println("Skipped");
                     skipped = false;
                 }
-                
             }
         }
     }
 
-    public void reverseOrder(int i){
-        Player reveser = competitors.get(i);
-        while (competitors.get(competitors.size()-1).getName() != reveser.getName()) {
-            competitors.add(0, competitors.remove(competitors.size()-1));
+    public void reverseOrder(int i) {
+        Player reverser = competitors.get(i);
+        while (competitors.get(competitors.size() - 1).getName() != reverser.getName()) {
+            competitors.add(0, competitors.remove(competitors.size() - 1));
         }
     }
+
     public static void main(String[] args) {
         Game game = new Game();
         game.playGame();

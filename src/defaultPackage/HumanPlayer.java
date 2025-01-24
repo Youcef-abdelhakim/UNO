@@ -13,6 +13,7 @@ public class HumanPlayer extends Player {
             System.out.println("Your hand: " + getHand());
             System.out.print("Enter the card index to play (0-" + (getHand().size() - 1) + "), or -1 to draw: ");
             int choice = scanner.nextInt();
+            scanner.nextLine();
 
             if (choice == -1) {
                 Card newCard = gameDeck.popCard();
@@ -32,7 +33,6 @@ public class HumanPlayer extends Player {
                 System.out.println("Invalid choice. Try again.");
             }
         }
-        scanner.close();
         return selectedCard;
     }
 }
