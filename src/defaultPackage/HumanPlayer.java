@@ -9,11 +9,23 @@ public class HumanPlayer extends Player {
         Scanner scanner = new Scanner(System.in);
         Card selectedCard = null;
         while (true) {
-            System.out.println("Last card on the pile: " + lastCard);
-            System.out.println("Your hand: " + getHand());
-            System.out.print("Enter the card index to play (0-" + (getHand().size() - 1) + "), or -1 to draw: ");
+            System.out.println("*************************************************");
+            System.out.println("Last card on the game table is : [" + lastCard + "]\n");
+            
+        System.out.println("Your Cards :");
+        System.out.println("================================================================================================================================");
+            for(int i = 0; i < getHand().size(); i++) {
+                System.out.print("[(" + i + ") " + getHand().get(i) + "]");
+            }
+            
+            System.out.println("\n================================================================================================================================");
+
+            System.out.println("<--Enter the card index to play (0-" + (getHand().size() - 1) + "), or -1 to draw: -->");
             int choice = scanner.nextInt();
             scanner.nextLine();
+            while (choice < -1|| choice > getHand().size()-1) {
+                System.out.println("***Please respect what the game request , Enter the card index to play (0-" +(getHand().size() - 1) + "), or -1 to draw***" );
+            }
 
             if (choice == -1) {
                 Card newCard = gameDeck.popCard();
@@ -27,12 +39,13 @@ public class HumanPlayer extends Player {
                     System.out.println("You played: " + selectedCard);
                     break;
                 } else {
-                    System.out.println("Invalid card! Choose a card that matches the color or value.");
+                    System.out.println("***Invalid card! Choose a card that matches the color or value.***");
                 }
             } else {
-                System.out.println("Invalid choice. Try again.");
+                System.out.println("***Invalid choice. Try again.***");
             }
         }
+        System.out.println("*************************************************");
         return selectedCard;
     }
 }

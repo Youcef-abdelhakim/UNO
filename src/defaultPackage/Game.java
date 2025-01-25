@@ -19,11 +19,31 @@ public class Game {
 
     public void setupGame() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter the total number of competitors (2-4): ");
+        System.out.println("================================================================");
+        System.out.println("====================WELCOM TO A NEW UNO GAME====================");
+        System.out.println("Provide the number of players,(number should be between 2 and 4 !):");
+
         int numberOfCompetitors = scanner.nextInt();
-        System.out.println("Enter the number of human players (1-" + numberOfCompetitors + "): ");
+        while (numberOfCompetitors < 2 || numberOfCompetitors > 4) {
+            System.out.println("Invalid Number, Please respect what the game request !");
+            System.out.println("Reprovide the Number of Players :(number should be between 2 and 4 !):");
+            numberOfCompetitors = scanner.nextInt();
+        }
+
+
+        System.out.println("Provide the number of Humans player, Number should be between (1-" + numberOfCompetitors + "): ");
         int numberOfHumans = scanner.nextInt();
+
+        while (numberOfHumans < 1 || numberOfHumans > numberOfCompetitors) {
+            System.out.println("Invalid Number, Please respect what the game request !");
+            System.out.println("Reprovide the Number of Humans :(number should be between 1 and" + numberOfCompetitors + "):");
+            numberOfHumans = scanner.nextInt();
+        }
+
         scanner.nextLine();
+        System.out.println("================================================================");
+        System.out.println("Provide the player's names");
+        System.out.println("--------------------------");
 
         for (int i = 0; i < numberOfHumans; i++) {
             System.out.println("Enter the name of player " + (i + 1) + ": ");
@@ -38,21 +58,26 @@ public class Game {
             bot.setName("Bot" + (i + 1));
             competitors.add(bot);
         }
-
+        System.out.println("================================================================");
+        System.out.println("This game is gona be between :");
+        for(int i = 0; i < competitors.size(); i ++) {
+            System.out.println("*" + competitors.get(i).getName());
+        }
         gameDeck = new Deck();
         for (Player player : competitors) {
             for (int j = 0; j < 7; j++) {
                 player.addCard(gameDeck.popCard());
             }
         }
-
+        System.out.println("================================================================");
         do {
             lastCard = gameDeck.popCard();
         } while (lastCard.getValue() == Card.Value.DrawTwo);
 
         Collections.shuffle(competitors);
-        System.out.println(competitors);
-        System.out.println("Game setup complete. Starting the game!");
+        System.out.println("*************Game setup complete. Starting the game!************");
+        System.out.println("================================================================");
+        
     }
 
     public void playGame() {
@@ -68,6 +93,7 @@ public class Game {
                     if (plusTwo) {
                         Acc += 2;
                         if (currentPlayer instanceof HumanPlayer) {
+                            System.out.println("Checking for DrawTwo counters...");
                             if (currentPlayer.counter(Value.DrawTwo).size() != 0) {
                                 System.out.println("Would you put your counter or draw two cards:\n[0]: choose from " + currentPlayer.counter(Value.DrawTwo) + "\n[other]: Draw two");
                                 Scanner s = new Scanner(System.in);
@@ -92,15 +118,16 @@ public class Game {
                                     }
                                     plusTwo = false;
                                     System.out.println(currentPlayer.getName() + " drew"+Acc+" cards.");
+                                    Acc = 0;
                                 }
                                 s.close();
                             } else {
                                 for (int index = 0; index < Acc; index++) {
                                     currentPlayer.addCard(gameDeck.popCard());
                                 }
-                                Acc = 0;
                                 plusTwo = false;
                                 System.out.println(currentPlayer.getName() + " drew "+Acc+" cards.");
+                                Acc = 0;
                             }
                         } else if (currentPlayer instanceof BootPlayer) {
                             System.out.println(currentPlayer.getName() + " has drew " + Acc + " cards.");
