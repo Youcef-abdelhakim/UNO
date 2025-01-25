@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
-import org.omg.CORBA.CODESET_INCOMPATIBLE;
 
 public class Game {
     private List<Player> competitors;
@@ -41,11 +40,7 @@ public class Game {
             System.out.println("Reprovide the Number of Humans :(number should be between 1 and" + numberOfCompetitors + "):");
             numberOfHumans = scanner.nextInt();
         }
-        try {
-            Thread.sleep(3000); // Pause for 3 seconds (3000 milliseconds)
-        } catch (InterruptedException e) {
-            System.out.println("Thread was interrupted!");
-        }
+        pause();
         scanner.nextLine();
         System.out.println("================================================================");
         System.out.println("Provide the player's names");
@@ -60,7 +55,7 @@ public class Game {
         }
 
         for (int i = 0; i < numberOfCompetitors - numberOfHumans; i++) {
-            BootPlayer bot = new BootPlayer();
+            BotPlayer bot = new BotPlayer();
             bot.setName("Bot" + (i + 1));
             competitors.add(bot);
         }
@@ -174,7 +169,7 @@ public class Game {
                                 System.out.println(currentPlayer.getName() + " drew "+Acc+" cards.");
                                 Acc = 0;
                             }
-                        } else if (currentPlayer instanceof BootPlayer) {
+                        } else if (currentPlayer instanceof BotPlayer) {
                             System.out.println(currentPlayer.getName() + " has drew " + Acc + " cards.");
                             for (int index = 0; index < Acc; index++) {
                                 currentPlayer.addCard(gameDeck.popCard());

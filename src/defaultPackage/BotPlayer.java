@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class BootPlayer extends Player {
+public class BotPlayer extends Player {
 
     @Override
     public Card putCard(Card lastCard, Deck gameDeck) {
