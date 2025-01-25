@@ -92,32 +92,48 @@ public class Game {
         System.out.println("================================================================");
         
     }
-
+    
+    public boolean handleReverse(int indexOfReverser){
+        Player reverser = competitors.get(indexOfReverser);
+        Collections.reverse(this.competitors);
+        indexOfReverser = competitors.indexOf(reverser)+1;
+        return false;
+    }
+    
+    public void pause(){
+        try {
+            Thread.sleep(1500); 
+        } catch (InterruptedException e) {
+            
+        }
+    }
+    
     public void playGame() {
         boolean plusTwo = false;
         int Acc = 0;
         boolean skipped = false;
         boolean reverse = false;
+        switch (lastCard.getValue()) {
+            case Skip :
+                skipped = true;
+                break;
+            case DrawTwo :
+                plusTwo = true;
+            case Reverse :
+                reverse = true;
+            default:
+                break;
+        }
         while (winner == null) {
             for (int i = 0; i < competitors.size(); i++) {
                 if (reverse) {
-                    Player reverser = competitors.get(i);
-                    Collections.reverse(this.competitors);
-                    i = competitors.indexOf(reverser)+1;
-                    reverse = false;
-                    for(int k = 0; k < competitors.size(); k++) {
-                        System.out.println("*" + competitors.get((i+k)%competitors.size()).getName());
-                    }
+                    reverse = handleReverse(i);
                     continue;
                 }
                 Player currentPlayer = competitors.get(i);
-                try {
-                    Thread.sleep(1500); 
-                } catch (InterruptedException e) {
-                    
-                }
+                
                 System.out.println("\n" + currentPlayer.getName() + "'s turn.");
-
+                pause();
                 if (!skipped) {
                     if (plusTwo) {
                         Acc += 2;
