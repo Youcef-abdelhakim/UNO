@@ -6,6 +6,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
+import org.omg.CORBA.CODESET_INCOMPATIBLE;
+
 public class Game {
     private List<Player> competitors;
     private Deck gameDeck;
@@ -39,7 +41,11 @@ public class Game {
             System.out.println("Reprovide the Number of Humans :(number should be between 1 and" + numberOfCompetitors + "):");
             numberOfHumans = scanner.nextInt();
         }
-
+        try {
+            Thread.sleep(3000); // Pause for 3 seconds (3000 milliseconds)
+        } catch (InterruptedException e) {
+            System.out.println("Thread was interrupted!");
+        }
         scanner.nextLine();
         System.out.println("================================================================");
         System.out.println("Provide the player's names");
@@ -58,6 +64,11 @@ public class Game {
             bot.setName("Bot" + (i + 1));
             competitors.add(bot);
         }
+        try {
+            Thread.sleep(3000); // Pause for 3 seconds (3000 milliseconds)
+        } catch (InterruptedException e) {
+            System.out.println("Thread was interrupted!");
+        }
         System.out.println("================================================================");
         System.out.println("This game is gona be between :");
         for(int i = 0; i < competitors.size(); i ++) {
@@ -69,11 +80,13 @@ public class Game {
                 player.addCard(gameDeck.popCard());
             }
         }
+        try {
+            Thread.sleep(3000); // Pause for 3 seconds (3000 milliseconds)
+        } catch (InterruptedException e) {
+            System.out.println("Thread was interrupted!");
+        }
         System.out.println("================================================================");
-        do {
-            lastCard = gameDeck.popCard();
-        } while (lastCard.getValue() == Card.Value.DrawTwo);
-
+        lastCard = gameDeck.popCard();
         Collections.shuffle(competitors);
         System.out.println("*************Game setup complete. Starting the game!************");
         System.out.println("================================================================");
@@ -84,9 +97,22 @@ public class Game {
         boolean plusTwo = false;
         int Acc = 0;
         boolean skipped = false;
+        boolean reverse = false;
         while (winner == null) {
             for (int i = 0; i < competitors.size(); i++) {
+                if (reverse) {
+                    Player reverser = competitors.get(i);
+                    Collections.reverse(this.competitors);
+                    i = competitors.indexOf(reverser)+1;
+                    reverse = false;
+                    break;
+                }
                 Player currentPlayer = competitors.get(i);
+                try {
+                    Thread.sleep(1500); 
+                } catch (InterruptedException e) {
+                    
+                }
                 System.out.println("\n" + currentPlayer.getName() + "'s turn.");
 
                 if (!skipped) {
@@ -122,6 +148,7 @@ public class Game {
                                 }
                                 s.close();
                             } else {
+                                System.out.println("No counters found");
                                 for (int index = 0; index < Acc; index++) {
                                     currentPlayer.addCard(gameDeck.popCard());
                                 }
@@ -146,8 +173,7 @@ public class Game {
                             } else if (playedCard.getValue() == Card.Value.Skip) {
                                 skipped = true;
                             } else if (playedCard.getValue() == Card.Value.Reverse) {
-                                reverseOrder(i);
-                                break;
+                                reverse = true;
                             }
                             if (currentPlayer.getHand().isEmpty()) {
                                 winner = currentPlayer;
@@ -164,14 +190,6 @@ public class Game {
         }
     }
 
-    public void reverseOrder(int i) {
-        Player reverser = competitors.get(i);
-        while (competitors.get(competitors.size() - 1).getName() != reverser.getName()) {
-            competitors.add(0, competitors.remove(competitors.size() - 1));
-        }
-        Collections.reverse(competitors);
-        competitors.add(0, competitors.remove(competitors.size() - 1));
-    }
 
     public static void main(String[] args) {
         Game game = new Game();
