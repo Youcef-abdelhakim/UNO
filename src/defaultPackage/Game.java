@@ -67,8 +67,9 @@ public class Game {
         try {
             Thread.sleep(3000); // Pause for 3 seconds (3000 milliseconds)
         } catch (InterruptedException e) {
-            System.out.println("Thread was interrupted!");
+
         }
+        Collections.shuffle(competitors);
         System.out.println("================================================================");
         System.out.println("This game is gona be between :");
         for(int i = 0; i < competitors.size(); i ++) {
@@ -87,7 +88,6 @@ public class Game {
         }
         System.out.println("================================================================");
         lastCard = gameDeck.popCard();
-        Collections.shuffle(competitors);
         System.out.println("*************Game setup complete. Starting the game!************");
         System.out.println("================================================================");
         
@@ -105,7 +105,10 @@ public class Game {
                     Collections.reverse(this.competitors);
                     i = competitors.indexOf(reverser)+1;
                     reverse = false;
-                    break;
+                    for(int k = 0; k < competitors.size(); k++) {
+                        System.out.println("*" + competitors.get((i+k)%competitors.size()).getName());
+                    }
+                    continue;
                 }
                 Player currentPlayer = competitors.get(i);
                 try {
@@ -143,10 +146,9 @@ public class Game {
                                         currentPlayer.addCard(gameDeck.popCard());
                                     }
                                     plusTwo = false;
-                                    System.out.println(currentPlayer.getName() + " drew"+Acc+" cards.");
+                                    System.out.println(currentPlayer.getName() + " drew "+Acc+" cards.");
                                     Acc = 0;
                                 }
-                                s.close();
                             } else {
                                 System.out.println("No counters found");
                                 for (int index = 0; index < Acc; index++) {
