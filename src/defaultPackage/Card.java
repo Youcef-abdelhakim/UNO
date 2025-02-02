@@ -1,6 +1,17 @@
 package defaultPackage;
 
+import java.security.DrbgParameters.Reseed;
+
 public class Card {
+
+    public static final String RED = "\u001B[31m";
+    public static final String BLUE = "\u001B[34m";
+    public static final String GREEN = "\u001B[32m";
+    public static final String YELLOW = "\u001B[33m";
+    public static final String RESET = "\u001B[0m"; 
+
+    private String colore;
+
 
     enum Color {
         Red, Blue, Green, Yellow;
@@ -40,7 +51,25 @@ public class Card {
     }
 
     public String toString() {
-        return color + " " + value;
+
+        switch (color) {
+            case Red:
+                colore = RED;
+                break;
+            case Blue : 
+                colore = BLUE;
+                break;
+            case Green : 
+                colore = GREEN;
+                break;
+            case Yellow : 
+                colore = YELLOW;
+                break;
+        
+            default:
+                break;
+        }
+        return colore + color + " " + value + RESET;
     }
 
     public boolean isDrawTwo() {

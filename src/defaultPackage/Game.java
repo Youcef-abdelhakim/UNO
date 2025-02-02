@@ -60,7 +60,7 @@ public class Game {
             competitors.add(bot);
         }
         try {
-            Thread.sleep(3000); // Pause for 3 seconds (3000 milliseconds)
+            Thread.sleep(1000); // Pause for 3 seconds (3000 milliseconds)
         } catch (InterruptedException e) {
 
         }
@@ -76,8 +76,9 @@ public class Game {
                 player.addCard(gameDeck.popCard());
             }
         }
+        System.out.println("Giving cards ...");
         try {
-            Thread.sleep(3000); // Pause for 3 seconds (3000 milliseconds)
+            Thread.sleep(1000); // Pause for 3 seconds (3000 milliseconds)
         } catch (InterruptedException e) {
             System.out.println("Thread was interrupted!");
         }
@@ -196,7 +197,7 @@ public class Game {
                         }
                     }
                 } else {
-                    System.out.println("Skipped");
+                    System.out.println("*** Skipped ***");
                     skipped = false;
                 }
             }

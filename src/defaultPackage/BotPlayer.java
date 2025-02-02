@@ -28,5 +28,6 @@ public class BotPlayer extends Player {
             System.out.println(getName() + " drew a card.");
             return null;
         }
+        
     }
 }
